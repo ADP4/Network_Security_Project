@@ -4,5 +4,7 @@ numpy
 seaborn
 pymongo
 certifi
+pymongo[srv]
+
 
 ##-e .
