@@ -4,6 +4,7 @@ numpy
 seaborn
 pymongo
 certifi
+scikit-learn
 pymongo[srv]
 
 
