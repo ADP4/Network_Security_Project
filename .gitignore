@@ -1,3 +1,25 @@
-venvpro
-.env
+
+#Logs
 Logs
+
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venvpro/
+venv/
+env/
+
+# Environment variables
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+

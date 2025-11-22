@@ -14,6 +14,8 @@ FEATURE_STORE_FILE_NAME: str = "phisingData.csv"
 TRAIN_FILE_NAME: str = "train.csv"
 TEST_FILE_NAME: str = "test.csv"
 
+SCHEMA_FILE_PATH = os.path.join("data_schema","schema.yaml")
+
 '''Data Ingestion Constants'''
 
 DATA_INGESTION_COLLECTION_NAME: str = "NetworkData"
