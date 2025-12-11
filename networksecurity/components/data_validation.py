@@ -46,8 +46,8 @@ class DataValidation:
             required_num_of_columns = len(self.schema_config.get("columns",{}))
             num_of_columns_in_df= len(dataframe.columns)
 
-            logging.info("required number of columns are: {required_num_of_columns}")
-            logging.info("number of columns in dataframe are: {num_of_columns_in_df}")
+            logging.info(f"required number of columns are: {required_num_of_columns}")
+            logging.info(f"number of columns in dataframe are: {num_of_columns_in_df}")
 
             return required_num_of_columns==num_of_columns_in_df
         
@@ -62,29 +62,36 @@ class DataValidation:
 
         if validated returns true
         """
-
+        logging.info("column name validation started")
         try:
             #test for duplicate columns in dataframe
             if len(list(dataframe.columns)) != len(list(set(dataframe.columns))):
                 logging.info("duplicate columns in dataframe detected")
                 return False
-            
+            logging.info("duplicate columns in dataframe NOT detected")
+
             #test of missing or extra columns
             actual_columns = set(dataframe.columns)
             excepted_columns = set(self.schema_config.get("columns",{}))
 
             missing_columns = excepted_columns - actual_columns
             if missing_columns:
-                logging.info("missing columns in dataframe: {missing_columns}")
+                logging.info(f"missing columns in dataframe: {missing_columns}")
+            logging.info(f" NO missing columns in dataframe {missing_columns}")
+
 
             extra_columns = actual_columns - excepted_columns
             if extra_columns:
-                logging.info(" Extra columns in dataframe: {extra_columns}")
+                logging.info(f" Extra columns in dataframe: {extra_columns}")
+            logging.info(f" NO Extra columns in dataframe {extra_columns}")
 
-            if len(missing_columns)!=0 or len(excepted_columns)!=0:
+            if len(missing_columns)!=0 or len(extra_columns)!=0:
+                logging.info("------in if false")
                 return False
             else:
+                logging.info("------true")
                 return True
+            
                 
         except Exception as e:
             raise Network_Security_Exception (e,sys)
@@ -119,7 +126,7 @@ class DataValidation:
             report_file_path = self.data_validation_config.drift_report_file_path
 
             logging.info(f"Writing drift report to: {report_file_path}")
-            write_yaml_file(file_path=report_file_path)
+            write_yaml_file(file_path=report_file_path,content=report)
             logging.info("Writing drift report successful")
 
             return status
@@ -153,8 +160,9 @@ class DataValidation:
 
             if errors:
                 all_errors= "\n".join(errors)
-                logging.info("Data Validation has failed:\n{all_errors}")
-                raise Network_Security_Exception(e,sys)
+                print (all_errors)
+                logging.info(f"Data Validation has failed:\n{all_errors}")
+                raise Network_Security_Exception("validation failed: all errors",sys)
             
             #check for the drift in data
             drift_status = self.detect_dataset_drift(train_df,test_df,threshold=0.05)

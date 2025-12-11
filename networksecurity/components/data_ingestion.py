@@ -54,6 +54,11 @@ class DataIngestion:
 
             df.replace({"na":np.nan},inplace=True)
 
+            original_rows = df.shape[0]
+
+            df = df.drop_duplicates()
+            logging.info(f"Removed {original_rows - df.shape[0]} duplicate rows.")  
+
             return df
         
         except Exception as e:
