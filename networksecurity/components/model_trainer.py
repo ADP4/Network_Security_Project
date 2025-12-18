@@ -25,6 +25,11 @@ from sklearn.ensemble import RandomForestClassifier
 
 import mlflow
 
+import dagshub
+dagshub.init(repo_owner='ADP4', repo_name='Network_Security_Project', mlflow=True)
+
+
+
 
 class ModelTrainer:
     def __init__(self, data_transformation_artifact: DataTransformationArtifact,
@@ -243,9 +248,10 @@ class ModelTrainer:
             network_model = NetworkModel(preprocessor=preprocessor, model=best_model)
             save_object(self.model_trainer_config.trained_model_file_path, network_model)
 
-                # Also save raw best model (optional)
+                # Also save raw best model & preprocessor (model pusher)
             os.makedirs("final_model", exist_ok=True)
             save_object("final_model/model.pkl", best_model)
+            save_object("final_model/preprocessor.pkl", preprocessor)
 
                 # Prepare artifact ------------------
             model_trainer_artifact = ModelTrainerArtifact(

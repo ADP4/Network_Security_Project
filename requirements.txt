@@ -9,5 +9,8 @@ pymongo[srv]
 pyaml
 xgboost
 mlflow
-
+dagshub
+fastapi
+uvicorn
+python-multipart
 ##-e .
