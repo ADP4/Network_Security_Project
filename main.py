@@ -5,7 +5,9 @@ from networksecurity.logging.logger import logging
 from networksecurity.components.data_ingestion import DataIngestion
 from networksecurity.components.data_validation import DataValidation
 from networksecurity.components.data_transformation import DataTransformation
-from networksecurity.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
+from networksecurity.components.model_trainer import ModelTrainer
+
+from networksecurity.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
 from networksecurity.entity.config_entity import TrainingPipelineConfig
 
 import sys
@@ -43,6 +45,17 @@ if __name__=='__main__':
         print("================================================================================")
         print("transformation artifact:")
         print(datatransformation_artifact)
+
+        modeltrainerconfig = ModelTrainerConfig(trainingpipelineconfig)
+        model_trainer = ModelTrainer(datatransformation_artifact, modeltrainerconfig)
+
+        logging.info("main: Initiate the model training")
+        modeltrainer_artifact = model_trainer.initiate_model_trainer()
+        logging.info("main: Model Training Completed")
+        print("================================================================================")
+        print("Model Trainer Artifact:")
+        print(modeltrainer_artifact)
+
 
     except Exception as e:
         logging.info("Error in main")
