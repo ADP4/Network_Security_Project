@@ -5,12 +5,18 @@ Logs
 # Byte-compiled files
 __pycache__/
 *.py[cod]
+**/__pycache__/
+***/__pycache__/
+*$py.class
+*.pyc
+*.pyo
+*.pyd
 
 # Virtual environments
 venvpro/
 venv/
 env/
-
+.venv/
 # Environment variables
 .env
 
@@ -22,4 +28,9 @@ build/
 dist/
 *.egg-info/
 
+mlruns/
+mlflow.db
 
+#os files
+.DS_Store
+Thumbs.db

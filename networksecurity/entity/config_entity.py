@@ -7,8 +7,12 @@ from networksecurity.constant import training_pipeline_constants
 class TrainingPipelineConfig:
     '''  Initial configuration '''
 
-    def __init__(self, timestamp=datetime.now()):
-        self.timestamp=timestamp.strftime("%d-%m-%Y_%H-%M-%S")
+    def __init__(self, timestamp: str| None = None):
+
+        if timestamp is None:
+            timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+
+        self.timestamp=timestamp
 
         self.pipeline_name = training_pipeline_constants.PIPELINE_NAME
         self.artifact_dir_name = training_pipeline_constants.ARTIFACT_DIR_NAME
@@ -17,7 +21,7 @@ class TrainingPipelineConfig:
 
         self.model_dir_name = os.path.join("final_model")
 
-        self.timestamp=timestamp
+        
 
 class DataIngestionConfig:
     ''' Configuration for ingesting data '''
