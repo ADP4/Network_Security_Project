@@ -102,51 +102,51 @@ class ModelTrainer:
             
             #Defining candidate models:
             models = {
-                #"LogisticRegression": LogisticRegression( max_iter=1000, class_weight="balanced", n_jobs= -1), 
+                "LogisticRegression": LogisticRegression( max_iter=1000, class_weight="balanced", n_jobs= -1), 
 
                 "Random Forest": RandomForestClassifier(n_jobs=-1, random_state=42),
 
-                #"GradientBoosting": GradientBoostingClassifier(random_state=42),
+                "GradientBoosting": GradientBoostingClassifier(random_state=42),
 
-                #"AdaBoost": AdaBoostClassifier(random_state=42),
+                "AdaBoost": AdaBoostClassifier(random_state=42),
 
                 "SVM_RBF": SVC( probability=True,  # needed for ROC-AUC / predict_proba
                                 class_weight="balanced", random_state=42), 
 
-                #"XGBoost" :  XGBClassifier(objective="binary:logistic",
-                 #                           n_estimators=200,
-                  #                          eval_metric="logloss",
-                  #                             objective="binary:logistic"
-                   #                         n_jobs=-1) 
+                "XGBoost" :  XGBClassifier(objective="binary:logistic",
+                                            n_estimators=200,
+                                            eval_metric="logloss",
+                                               objective="binary:logistic"
+                                            n_jobs=-1) 
                     }
 
             #Hyperparameter grids (GridSearchCV)
 
             params = {
-                #"LogisticRegression" : {"C": [0.1, 1, 10], 
-                #                        "solver": ["lbfgs"],
-                #                        "penalty": ["l2"]},
+                "LogisticRegression" : {"C": [0.1, 1, 10], 
+                                        "solver": ["lbfgs"],
+                                        "penalty": ["l2"]},
 
                 "RandomForest": {"n_estimators": [100, 200], 
                                 "max_depth": [None, 10, 20], 
                                 "min_samples_split": [2, 5],
                                  "max_features": ["sqrt", "log2"]},
 
-                #"GradientBoosting": {"n_estimators": [100, 200],
-                #                    "learning_rate": [0.1, 0.05],
-                #                        "max_depth": [3, 5]},
+                "GradientBoosting": {"n_estimators": [100, 200],
+                                    "learning_rate": [0.1, 0.05],
+                                        "max_depth": [3, 5]},
 
-                #"AdaBoost": {"n_estimators": [50, 100, 200],
-                 #           "learning_rate": [0.1, 0.5, 1.0]},
+                "AdaBoost": {"n_estimators": [50, 100, 200],
+                            "learning_rate": [0.1, 0.5, 1.0]},
 
                     "SVM_RBF": {"C": [0.1, 1.0, 10.0],
                                 "gamma": ["scale", "auto"],
                                 "kernel": ["rbf"]},
 
-                  #  "XGBoost" : {"n_estimators": [100, 200], 
-                   #             "learning_rate": [0.1, 0.05],
-                    #            "max_depth": [3, 5],
-                     #           "subsample": [0.8, 1.0], "colsample_bytree": [0.8, 1.0]}
+                    "XGBoost" : {"n_estimators": [100, 200], 
+                                "learning_rate": [0.1, 0.05],
+                                "max_depth": [3, 5],
+                                "subsample": [0.8, 1.0], "colsample_bytree": [0.8, 1.0]}
                      }
                 
     #Evaluate models with GridSearchCV ------------------
@@ -154,7 +154,7 @@ class ModelTrainer:
                                         X_test=X_test, y_test=y_test,
                                         models=models, params=params)
             
-            print(model_report)
+            
                 
     #Select best model by test F1-score ------------------
             best_model_name = None
@@ -204,8 +204,6 @@ class ModelTrainer:
             pd.DataFrame(comparison_rows).sort_values("test_f1", ascending=False).to_csv(metrics_csv_path, index=False)
 
             logging.info(f"Saved model comparison metrics to: {metrics_csv_path}")
-
-
 
 
                     #Check expected score & overfitting ------------------
