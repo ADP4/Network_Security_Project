@@ -1,6 +1,8 @@
 
 #Logs
-Logs
+Logs/
+Artifacts/
+final_model/
 
 # Byte-compiled files
 __pycache__/

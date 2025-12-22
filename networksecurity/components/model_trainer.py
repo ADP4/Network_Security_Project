@@ -25,10 +25,13 @@ from sklearn.ensemble import RandomForestClassifier
 
 import mlflow
 
+from dotenv import load_dotenv
+load_dotenv()
+repo_owner = os.getenv("repo_owner")
+repo_name = os.getenv("repo_name")
+
 import dagshub
-dagshub.init(repo_owner='ADP4', repo_name='Network_Security_Project', mlflow=True)
-
-
+dagshub.init(repo_owner, repo_name, mlflow=True)
 
 
 class ModelTrainer:
@@ -116,7 +119,7 @@ class ModelTrainer:
                 "XGBoost" :  XGBClassifier(objective="binary:logistic",
                                             n_estimators=200,
                                             eval_metric="logloss",
-                                               objective="binary:logistic"
+                                            
                                             n_jobs=-1) 
                     }
 
@@ -277,22 +280,16 @@ class ModelTrainer:
         Logs metrics and model to MLflow for the best model.
         """
         try:
-            #mlflow.set_tracking_uri(os.environ.get("MLFLOW_TRACKING_URI", ""))
-            #mlflow.set_registry_uri(os.environ.get("MLFLOW_TRACKING_URI", ""))
-
-            #tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
-
-           # mlflow.set_tracking_uri("./mlruns") #---- chnaged
-
+           
             with mlflow.start_run(run_name=model_name):
 
-                # ---------------- OPTIONAL IMPROVEMENTS START ----------------
+              
                 mlflow.set_tag("best_model", model_name)
                 mlflow.set_tag("problem_type", "binary_classification")
                 mlflow.set_tag("domain", "network_security")
                 mlflow.set_tag("dataset", "UCI_Phishing_Websites")
                 mlflow.set_tag("target_column", "Result")
-                # ---------------- OPTIONAL IMPROVEMENTS END ------------------
+                
 
 
                 # Log metrics
@@ -309,17 +306,6 @@ class ModelTrainer:
                     mlflow.log_params(best_model.get_params())
                 except Exception:
                     logging.warning("Could not log all model parameters to MLflow.")
-
-                # Log model
-                #if tracking_url_type_store != "file":
-                #    mlflow.sklearn.log_model(
-                #        sk_model=best_model,
-                #        artifact_path="model",
-                #        registered_model_name=model_name )
-                #else:
-                #    mlflow.sklearn.log_model(
-                #        sk_model=best_model,
-                #        artifact_path="model",)
 
                 mlflow.sklearn.log_model(
                         sk_model=best_model,
