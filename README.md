@@ -9,6 +9,14 @@ Phishing attacks remain a major threat in network security. This project focuses
 
 The system is designed as a production-grade ML pipeline, not just a notebook experiment.
 
+## Project Proof
+What this project demonstrates
+- End-to-end ML pipeline design (ingestion → validation → transformation → training)
+- Model comparison with hyperparameter tuning and selection using F1-score
+- Experiment tracking with MLflow (runs, metrics, model logging)
+- FastAPI inference service for batch CSV prediction
+- Dockerized application + CI/CD pipeline to push image to AWS ECR
+
 ## Key Features
 
 -End-to-end ML pipeline with modular components
@@ -103,27 +111,9 @@ Ready for deployment on EC2 / ECS
 
 Note: Final EC2 deployment was prepared but not executed due to account constraints. The architecture and CI/CD pipeline are fully deployment-ready.
 
-## Project Structure
-networksecurity/
-│
-├── components/
-│   ├── data_ingestion.py
-│   ├── data_validation.py
-│   ├── data_transformation.py
-│   └── model_trainer.py
-│
-├── pipeline/
-│   └── training_pipeline.py
-│
-├── utils/
-│   ├── ml_utils/
-│   └── main_utils/
-│
-├── app.py
-├── Dockerfile
-├── requirements.txt
-└── README.md
 
+## Outputs
+- `reports/model_comparison.csv` – model metrics comparison
 
 
 **Author**
